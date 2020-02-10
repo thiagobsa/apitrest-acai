@@ -1,7 +1,6 @@
 package com.produtos.acai.apirest.models;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,31 +18,22 @@ public class Produto implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	private String nome;
+	private String tamanho;
 	
-	private BigDecimal quantidade;
+	private String sabor;
+
+	private String personalizacao;
 	
-	private Integer tamanho;
+	private String tempoPreparo;
 	
-	private String descTamanho;
+	private Double valorTamanho;
 	
-	private BigDecimal valor;
+	private Double valorPersonalizacao;
 	
-	public Integer getTamanho() {
-		return tamanho;
-	}
+	private Double valorTotal;
 	
-	public void setTamanho(Integer tamanho) {
-		this.tamanho = tamanho;
-	}
+		
 	
-	public String getDescTamanho() {
-		return descTamanho;
-	}
-	
-	public void setDescTamanho(String descTamanho) {
-		this.descTamanho = descTamanho;
-	}
 
 	public long getId() {
 		return id;
@@ -53,52 +43,116 @@ public class Produto implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getTamanho() {
+		return tamanho;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setTamanho(String tamanho) {
+		this.tamanho = tamanho;
 	}
 
-	public BigDecimal getQuantidade() {
-		return quantidade;
+	public String getSabor() {
+		return sabor;
 	}
 
-	public void setQuantidade(BigDecimal quantidade) {
-		this.quantidade = quantidade;
+	public void setSabor(String sabor) {
+		this.sabor = sabor;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public String getPersonalizacao() {
+		return personalizacao;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setPersonalizacao(String personalizacao) {
+		this.personalizacao = personalizacao;
+	}
+
+	public String getTempoPreparo() {
+		return tempoPreparo;
+	}
+
+	public void setTempoPreparo(String tempoPreparo) {
+		this.tempoPreparo = tempoPreparo;
+	}
+
+	public Double getValorTamanho() {
+		return valorTamanho;
+	}
+
+	public void setValorTamanho(Double valorTamanho) {
+		this.valorTamanho = valorTamanho;
+	}
+
+	public Double getValorPersonalizacao() {
+		return valorPersonalizacao;
+	}
+
+	public void setValorPersonalizacao(Double valorPersonalizacao) {
+		this.valorPersonalizacao = valorPersonalizacao;
+	}
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+
+	
+	public Double valorTamanho(String tamanho) {
+		
+		if(tamanho.equalsIgnoreCase("pequeno (300ml)")) {
+			valorTamanho = 10.00;
+		} else if (tamanho.equalsIgnoreCase("médio (500ml)")) {
+			valorTamanho = 13.00;
+		} else if (tamanho.equalsIgnoreCase("grande (700ml)")) {
+			valorTamanho = 15.00;
+		}		
+		
+		return valorTamanho;
 	}
 	
-	public String validaId(long id) {
-			this.nome = "pedido realizado";
-		return nome;
+	public Double valorpersonalizacao(String personalizacao) {
+		
+		if(personalizacao.equalsIgnoreCase("leite ninho") || personalizacao.equalsIgnoreCase("paçoca")) {
+			valorPersonalizacao = 3.00;
+		} else {
+			valorPersonalizacao = 0.00;
+		}
+		
+		return valorPersonalizacao;
 	}
 	
-	public String tamanhoPedido(Integer tamanho) {
+	public Double calcularValor(Double valorTamanho ,Double valorPersonalizacao) {
 		
+		valorTotal = valorTamanho + valorPersonalizacao;
+		return valorTotal;
+	}
+	
+	public String calcularTempo(String tamanho, String sabor, String personalizacao) {
 		
-			String tam = String.valueOf(this.tamanho);
-			switch(tam) {
-				case "1": 
-					descTamanho = "Pequeno(300ml)";
-					
-				case "2": 
-					descTamanho = "Médio(500ml)";
-					
-				case "3": 
-					descTamanho = "Grande(700ml)";
-					
-				default:
-					descTamanho = "Pequeno(300ml)";
-			}
-		return descTamanho;	
+		int tempo = 0;
+		if(tamanho.equalsIgnoreCase("pequeno (300ml)")) {
+			tempo = 5;
+		} else if (tamanho.equalsIgnoreCase("médio (500ml)")) {
+			tempo = 7;
+		} else if (tamanho.equalsIgnoreCase("grande (700ml)")) {
+			tempo = 10;
+		}
+		
+		if(sabor.equalsIgnoreCase("kiwi")) {
+			tempo = tempo + 5;
+		}
+		
+		if(personalizacao.equalsIgnoreCase("paçoca")) {
+			tempo = tempo + 3;
+		}
+		
+		tempoPreparo = String.valueOf(tempo) + " Minutos";
+		
+		return tempoPreparo;
 	}
 }
+

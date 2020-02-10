@@ -45,8 +45,11 @@ public class ProdutoResource {
 	@ApiOperation(value="Salva um produto")
 	public Produto salvaProduto(@RequestBody Produto produto) {
 		
+		produto.valorTamanho(produto.getTamanho());
+		produto.valorpersonalizacao(produto.getPersonalizacao());
+		produto.calcularValor(produto.valorTamanho(produto.getTamanho()), produto.valorpersonalizacao(produto.getPersonalizacao()));
+		produto.calcularTempo(produto.getTamanho(), produto.getSabor(), produto.getPersonalizacao());
 		
-		produto.tamanhoPedido(produto.getTamanho());
 		return produtoRepository.save(produto);
 	}
 	
